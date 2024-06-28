@@ -121,7 +121,7 @@ export class Task1Component {
   }
 
   deletePosition(jobIndex: number, index: number) {
-    const frmgroup = <FormArray>this.myForm.get('job')?.value[jobIndex]?.value.positions;
+    const frmgroup = <FormArray>this.myForm.get('job')?.value[jobIndex]?.positions;
     frmgroup.removeAt(index);
   }
 }
