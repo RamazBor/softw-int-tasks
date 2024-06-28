@@ -1,1 +1,62 @@
-<p>task-1 works!</p>
+<form class="example-form" [formGroup]="myForm">
+  <div class="form-field-work-experience" formArrayName="job">
+    @for(exp of myForm.get('job')?.value; let i = $index; track i)
+    {
+    <div class="work-experience" [formGroupName]="i">
+      <label>Job {{ i + 1 }}</label
+      ><br />
+        <div class="column">
+          <mat-form-field class="example-full-width">
+            <mat-label>Company Name</mat-label>
+            <input matInput  formControlName="companyName">
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field class="example-full-width">
+            <mat-label>Company Web Address</mat-label>
+            <input matInput  formControlName="companySiteUrl">
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field class="example-full-width">
+            <mat-label>Company Description</mat-label>
+            <input matInput  formControlName="companyDescription">
+          </mat-form-field>
+        </div>
+        <div formArrayName="positions">
+          @for(position of myForm.get('job')?.value[i]?.positions; let j = $index; track j)
+          {
+          <div class="position" [formGroupName]="j">
+            <mat-form-field class="example-full-width">
+              <mat-label>Position</mat-label>
+              <input matInput  formControlName="position">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>Level</mat-label>
+              <input matInput  formControlName="level">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>Description</mat-label>
+              <input matInput  formControlName="description">
+            </mat-form-field>
+          </div>
+          <button (click)="deletePosition(i, j)">
+            Delete Position
+          </button>
+          }
+        </div>
+      <button
+        type="button"
+        class="delete-btn"
+        (click)="deleteJob(i)"
+      >
+        Delete Job
+      </button>
+      <button (click)="addPosition(i)">
+        Add Position
+      </button>
+    </div>
+    }
+    <button mat-flat-button (click)="addJob()">Add Job</button>
+  </div>
+</form>
