@@ -11,11 +11,10 @@ import {
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {MatSelectModule} from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { DateLessThanOrEqualsValidator } from './validators/dateLessThanOrEquals';
-
 
 @Component({
   selector: 'app-task-1',
@@ -30,18 +29,13 @@ import { DateLessThanOrEqualsValidator } from './validators/dateLessThanOrEquals
     MatSelectModule,
     MatDatepickerModule,
     FormsModule,
-    MatLabel
+    MatLabel,
   ],
   templateUrl: './task-1.component.html',
   styleUrl: './task-1.component.scss',
 })
 export class Task1Component {
-
-  levels: Array<string> = [
-    'Junion',
-    'Middle',
-    'Senior',
-  ];
+  levels: Array<string> = ['Junion', 'Middle', 'Senior'];
 
   myForm: FormGroup = new FormGroup({
     job: new FormArray([
@@ -50,14 +44,13 @@ export class Task1Component {
           null,
           Validators.required
         ),
-        companySiteUrl: new FormControl<string | undefined | null>(
-          null,
-          [Validators.required]
-        ),
-        companyDescription: new FormControl<string | undefined | null>(
-          null,
-          [Validators.required, Validators.minLength(15)]
-        ),
+        companySiteUrl: new FormControl<string | undefined | null>(null, [
+          Validators.required,
+        ]),
+        companyDescription: new FormControl<string | undefined | null>(null, [
+          Validators.required,
+          Validators.minLength(15),
+        ]),
         positions: new FormArray([
           new FormGroup({
             position: new FormControl<string | undefined | null>(
@@ -68,63 +61,63 @@ export class Task1Component {
               null,
               Validators.required
             ),
-            description: new FormControl<string | undefined | null>(
-              null,
-              [Validators.required, Validators.minLength(15)]
-            ),
-            startDate: new FormControl<Date | undefined | null>(
-              null,
-              [Validators.required, DateLessThanOrEqualsValidator('endDate')]
-            ),
+            description: new FormControl<string | undefined | null>(null, [
+              Validators.required,
+              Validators.minLength(15),
+            ]),
+            startDate: new FormControl<Date | undefined | null>(null, [
+              Validators.required,
+              DateLessThanOrEqualsValidator('endDate'),
+            ]),
             endDate: new FormControl<Date | undefined | null>(
               null,
               Validators.required
             ),
-          })
-        ])
-      })
-    ])
+          }),
+        ]),
+      }),
+    ]),
   });
 
   addJob() {
     const frmgroup: FormGroup = new FormGroup({
-        companyName: new FormControl<string | undefined | null>(
-          null,
-          Validators.required
-        ),
-        companySiteUrl: new FormControl<string | undefined | null>(
-          null,
-          Validators.required
-        ),
-        companyDescription: new FormControl<string | undefined | null>(
-          null,
-          [Validators.required, Validators.minLength(15)]
-        ),
-        positions: new FormArray([
-          new FormGroup({
-            position: new FormControl<string | undefined | null>(
-              null,
-              Validators.required
-            ),
-            level: new FormControl<string | undefined | null>(
-              null,
-              Validators.required
-            ),
-            description: new FormControl<string | undefined | null>(
-              null,
-              [Validators.required, Validators.minLength(15)]
-            ),
-            startDate: new FormControl<Date | undefined | null>(
-              null,
-              [Validators.required, DateLessThanOrEqualsValidator('endDate')]
-            ),
-            endDate: new FormControl<Date | undefined | null>(
-              null,
-              Validators.required
-            ),
-          })
-        ])
-  });
+      companyName: new FormControl<string | undefined | null>(
+        null,
+        Validators.required
+      ),
+      companySiteUrl: new FormControl<string | undefined | null>(
+        null,
+        Validators.required
+      ),
+      companyDescription: new FormControl<string | undefined | null>(null, [
+        Validators.required,
+        Validators.minLength(15),
+      ]),
+      positions: new FormArray([
+        new FormGroup({
+          position: new FormControl<string | undefined | null>(
+            null,
+            Validators.required
+          ),
+          level: new FormControl<string | undefined | null>(
+            null,
+            Validators.required
+          ),
+          description: new FormControl<string | undefined | null>(null, [
+            Validators.required,
+            Validators.minLength(15),
+          ]),
+          startDate: new FormControl<Date | undefined | null>(null, [
+            Validators.required,
+            DateLessThanOrEqualsValidator('endDate'),
+          ]),
+          endDate: new FormControl<Date | undefined | null>(
+            null,
+            Validators.required
+          ),
+        }),
+      ]),
+    });
 
     (<FormArray>this.myForm.get('job')).push(frmgroup);
   }
@@ -143,33 +136,34 @@ export class Task1Component {
         null,
         Validators.required
       ),
-      description: new FormControl<string | undefined | null>(
-        null,
-        [Validators.required, Validators.minLength(15)]
-      ),
-      startDate: new FormControl<Date | undefined | null>(
-        null,
-        [Validators.required, DateLessThanOrEqualsValidator('endDate')]
-      ),
+      description: new FormControl<string | undefined | null>(null, [
+        Validators.required,
+        Validators.minLength(15),
+      ]),
+      startDate: new FormControl<Date | undefined | null>(null, [
+        Validators.required,
+        DateLessThanOrEqualsValidator('endDate'),
+      ]),
       endDate: new FormControl<Date | undefined | null>(
         null,
         Validators.required
       ),
     });
-      (<FormArray>this.myForm.get('job')?.value[i]?.positions).push(frmgroup);
-
+    (<FormArray>this.myForm.get('job')?.value[i]?.positions).push(frmgroup);
   }
 
   deletePosition(jobIndex: number, index: number) {
-    const frmgroup = <FormArray>this.myForm.get('job')?.value[jobIndex]?.positions;
-    frmgroup.removeAt(index);
+    const frmArray = <FormArray>(
+      this.myForm.get('job')?.value[jobIndex]?.positions
+    );
+    frmArray.removeAt(index);
   }
 
   submit() {
-    if(this.myForm.valid) {
-      alert('Form Submitted Successfully');
-  } else {
-    alert('Form is not valid');
-  }
+    if (this.myForm.get('job')?.value.length >= 1 && this.myForm.valid) {
+      alert('Form Submitted Successfully.');
+    } else {
+      alert('Form is not valid!');
+    }
   }
 }
