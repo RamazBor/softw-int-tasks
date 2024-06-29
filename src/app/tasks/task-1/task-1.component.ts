@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import {
   FormArray,
   FormControl,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { DateLessThanOrEqualsValidator } from './validators/dateLessThanOrEquals';
 
 
 @Component({
@@ -24,11 +25,12 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
-    MatDividerModule,
     MatButtonModule,
     ReactiveFormsModule,
     MatSelectModule,
     MatDatepickerModule,
+    FormsModule,
+    MatLabel
   ],
   templateUrl: './task-1.component.html',
   styleUrl: './task-1.component.scss',
@@ -50,11 +52,11 @@ export class Task1Component {
         ),
         companySiteUrl: new FormControl<string | undefined | null>(
           null,
-          Validators.required
+          [Validators.required]
         ),
         companyDescription: new FormControl<string | undefined | null>(
           null,
-          Validators.required
+          [Validators.required, Validators.minLength(15)]
         ),
         positions: new FormArray([
           new FormGroup({
@@ -68,11 +70,11 @@ export class Task1Component {
             ),
             description: new FormControl<string | undefined | null>(
               null,
-              Validators.required
+              [Validators.required, Validators.minLength(15)]
             ),
             startDate: new FormControl<Date | undefined | null>(
               null,
-              Validators.required
+              [Validators.required, DateLessThanOrEqualsValidator('endDate')]
             ),
             endDate: new FormControl<Date | undefined | null>(
               null,
@@ -96,7 +98,7 @@ export class Task1Component {
         ),
         companyDescription: new FormControl<string | undefined | null>(
           null,
-          Validators.required
+          [Validators.required, Validators.minLength(15)]
         ),
         positions: new FormArray([
           new FormGroup({
@@ -110,11 +112,11 @@ export class Task1Component {
             ),
             description: new FormControl<string | undefined | null>(
               null,
-              Validators.required
+              [Validators.required, Validators.minLength(15)]
             ),
             startDate: new FormControl<Date | undefined | null>(
               null,
-              Validators.required
+              [Validators.required, DateLessThanOrEqualsValidator('endDate')]
             ),
             endDate: new FormControl<Date | undefined | null>(
               null,
@@ -143,11 +145,11 @@ export class Task1Component {
       ),
       description: new FormControl<string | undefined | null>(
         null,
-        Validators.required
+        [Validators.required, Validators.minLength(15)]
       ),
       startDate: new FormControl<Date | undefined | null>(
         null,
-        Validators.required
+        [Validators.required, DateLessThanOrEqualsValidator('endDate')]
       ),
       endDate: new FormControl<Date | undefined | null>(
         null,
@@ -161,5 +163,13 @@ export class Task1Component {
   deletePosition(jobIndex: number, index: number) {
     const frmgroup = <FormArray>this.myForm.get('job')?.value[jobIndex]?.positions;
     frmgroup.removeAt(index);
+  }
+
+  submit() {
+    if(this.myForm.valid) {
+      alert('Form Submitted Successfully');
+  } else {
+    alert('Form is not valid');
+  }
   }
 }
