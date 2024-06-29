@@ -1,0 +1,59 @@
+:host::ng-deep {
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  width: 600px;
+  background-color: #a9b0cf;
+  padding: 10px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    font-size: 30px;
+  }
+  .form-field-job {
+    .job {
+      label {
+        font-size: 20px;
+        font-weight: 500;
+      }
+      .column {
+        mat-form-field {
+          margin-right: 10px;
+          width: 240px;
+        }
+        .description {
+          width: calc(240px*2 + 10px);
+        }
+      }
+      .positions {
+        margin-top: 10px;
+        .delete-position {
+          background-color:#de1a24;
+          margin: 0 10px 40px 0;
+          color: #fff;
+          letter-spacing: 0.6px;
+        }
+      }
+      .add-position {
+        background-color:#3f8f29;
+        color: #fff;
+      }
+      .delete-job {
+        margin-bottom: 10px;
+        background-color: #011f4b;
+        padding: 10px 15px;
+      }
+    }
+  }
+  .submit {
+    padding: 10px 40px;
+    background-color: #452c63;
+    margin-top: 10px;
+    color: #fff;
+    font-size: 15px;
+    letter-spacing: 0.6px;
+  }
+}

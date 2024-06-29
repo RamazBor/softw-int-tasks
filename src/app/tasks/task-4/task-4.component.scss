@@ -1,0 +1,27 @@
+:host::ng-deep {
+  display: flex;
+  justify-content: center;
+  .highlight-date {
+    background-color: #dde5f3;
+    border-radius: 50%;
+  }
+}
+
+.dots-container {
+  display: inline-flex;
+  gap: 2px;
+  position: relative;
+  top: 16px;
+
+  > span {
+    width: 8px;
+    height: 8px;
+    background-color: #333;
+    border-radius: 50%;
+  }
+}
+
+mat-card {
+  width: 400px;
+  margin-top: 20px;
+}
