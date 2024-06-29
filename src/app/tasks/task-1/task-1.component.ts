@@ -11,22 +11,36 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+
 
 @Component({
   selector: 'app-task-1',
   standalone: true,
+  providers: [provideNativeDateAdapter()],
   imports: [
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
     MatDividerModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatDatepickerModule,
   ],
   templateUrl: './task-1.component.html',
   styleUrl: './task-1.component.scss',
 })
 export class Task1Component {
+
+  levels: Array<string> = [
+    'Junion',
+    'Middle',
+    'Senior',
+  ];
+
   myForm: FormGroup = new FormGroup({
     job: new FormArray([
       new FormGroup({
@@ -53,6 +67,14 @@ export class Task1Component {
               Validators.required
             ),
             description: new FormControl<string | undefined | null>(
+              null,
+              Validators.required
+            ),
+            startDate: new FormControl<Date | undefined | null>(
+              null,
+              Validators.required
+            ),
+            endDate: new FormControl<Date | undefined | null>(
               null,
               Validators.required
             ),
@@ -90,6 +112,14 @@ export class Task1Component {
               null,
               Validators.required
             ),
+            startDate: new FormControl<Date | undefined | null>(
+              null,
+              Validators.required
+            ),
+            endDate: new FormControl<Date | undefined | null>(
+              null,
+              Validators.required
+            ),
           })
         ])
   });
@@ -112,6 +142,14 @@ export class Task1Component {
         Validators.required
       ),
       description: new FormControl<string | undefined | null>(
+        null,
+        Validators.required
+      ),
+      startDate: new FormControl<Date | undefined | null>(
+        null,
+        Validators.required
+      ),
+      endDate: new FormControl<Date | undefined | null>(
         null,
         Validators.required
       ),

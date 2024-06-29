@@ -3,14 +3,7 @@
     #calendar
     [dateClass]="dateClass()"
     [selected]="selectedDate"
-
     [maxDate]="maxDate"[minDate]="minDate"
     (selectedChange)="onSelect($event)"
   ></mat-calendar>
 </mat-card>
-
-<ng-template #cellDotsTemplate>
-  <div class="dots-container">
-    <span></span>
-  </div>
-</ng-template>
