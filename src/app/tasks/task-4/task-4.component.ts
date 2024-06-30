@@ -17,7 +17,7 @@ import { MatCalendarCellCssClasses, MatDatepickerModule } from '@angular/materia
 })
 export class Task4Component {
 
-  minDate = this.getDateOffset(-30);
+  minDate = this.getDateOffset(0);
   maxDate = this.getDateOffset(30);
   selectedDate: Date = new Date();
   datesToHighlight = [

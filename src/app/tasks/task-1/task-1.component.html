@@ -1,88 +1,127 @@
 <form class="example-form" [formGroup]="myForm">
   <h1>Reactive Form</h1>
   <div class="form-field-job" formArrayName="job">
-    @for(exp of myForm.get('job')?.value; let i = $index; track i)
-    {
+    @for(exp of myForm.get('job')?.value; let i = $index; track i) {
     <div class="job" [formGroupName]="i">
       <label>Job {{ i + 1 }}</label
       ><br />
-        <div class="column">
-          <mat-form-field>
-            <mat-label>Company Name</mat-label>
-            <input matInput  formControlName="companyName">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Company Web Address</mat-label>
-            <input matInput  formControlName="companySiteUrl">
-          </mat-form-field>
-        </div>
-        <div class="column">
-          <mat-form-field class="description">
-            <mat-label>Company Description</mat-label>
-            <input matInput  formControlName="companyDescription">
-          </mat-form-field>
-        </div>
-        <div class="positions" formArrayName="positions">
-          @for(pos of myForm.get('job')?.value[i]?.positions; let j = $index; track j)
-          {
-          <div class="position" [formGroupName]="j">
-            <label>Position {{ j + 1 }}</label>
-            <div class="column">
-              <mat-form-field>
-                <mat-label>Position</mat-label>
-                <input matInput  formControlName="position">
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Select level</mat-label>
-                <mat-select formControlName="level">
-                  @for(level of levels; let i = $index; track i) {
-                    <mat-option value="option1">{{level}}</mat-option>
-                  }
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="column">
-              <mat-form-field>
-                <mat-label>Description</mat-label>
-                <input matInput  formControlName="description">
-              </mat-form-field>
-              <mat-form-field class="example-form-field">
-                <mat-label>Enter a date range</mat-label>
-                <mat-date-range-input [rangePicker]="rangePicker">
-                  <input matStartDate placeholder="Start date" formControlName="startDate"/>
-                  <input matEndDate placeholder="End date" formArrayName="endDate"/>
-                </mat-date-range-input>
-                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
-                <mat-date-range-picker #rangePicker>
-                  <mat-date-range-picker-actions>
-                    <button mat-button matDateRangePickerCancel>Cancel</button>
-                    <button mat-raised-button matDateRangePickerApply>Apply</button>
-                  </mat-date-range-picker-actions>
-                </mat-date-range-picker>
-              </mat-form-field>
-            </div>
-          </div>
-          <button class="delete-position btn" (click)="deletePosition(i, j)">
-            Delete Position
-          </button>
+      <div class="column">
+        <mat-form-field>
+          <mat-label>Company Name</mat-label>
+          <input matInput formControlName="companyName" />
+          <mat-error>CompanyName is <strong>required!</strong></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Company Web Address</mat-label>
+          <input matInput formControlName="companySiteUrl" />
+          <mat-error>Web Address is <strong>required!</strong></mat-error>
+        </mat-form-field>
+      </div>
+      <div class="column">
+        <mat-form-field class="description">
+          <mat-label>Company Description</mat-label>
+          <input matInput formControlName="companyDescription" />
+          @if(myForm.get('job')?.value[i]?.companyDescription?.length == null) {
+          <mat-error>Description is <strong>required!</strong></mat-error>
+          } @if (myForm.get('job')?.value[i]?.companyDescription?.length > 0 &&
+          myForm.get('job')?.value[i]?.companyDescription?.length < 15) {
+          <mat-error
+            >This field must be at least
+            <strong>15 characters!</strong></mat-error
+          >
           }
-          <button class="add-position btn" (click)="addPosition(i)">
-            Add Position
-          </button>
+        </mat-form-field>
+      </div>
+      <div class="positions" formArrayName="positions">
+        @for(pos of myForm.get('job')?.value[i].positions; let j = $index;
+        track j) {
+        <div class="position" [formGroupName]="j">
+          <label>Position {{ j + 1 }}</label>
+          <div class="column">
+            <mat-form-field>
+              <mat-label>Position</mat-label>
+              <input matInput formControlName="position" />
+              <mat-error
+                >Position field is <strong>required!</strong></mat-error
+              >
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Select level</mat-label>
+              <mat-select formControlName="level">
+                @for(level of levels; let i = $index; track i) {
+                <mat-option value="option1">{{ level }}</mat-option>
+                }
+              </mat-select>
+              <mat-error><strong>Required</strong> field!</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <mat-form-field>
+              <mat-label>Description</mat-label>
+              <input matInput formControlName="description" />
+              @if(myForm.get('job')?.value[i]?.positions[j]?.description?.length
+              == null) {
+              <mat-error
+                >Position description is <strong>required!</strong></mat-error
+              >
+              } @if
+              (myForm.get('job')?.value[i]?.positions[j]?.description?.length >
+              0 &&
+              myForm.get('job')?.value[i]?.positions[j]?.description?.length <
+              15) {
+              <mat-error
+                >This field must be at least
+                <strong>15 characters!</strong></mat-error
+              >
+              }
+            </mat-form-field>
+            <mat-form-field class="example-form-field">
+              <mat-label>Enter a date range</mat-label>
+              <mat-date-range-input [rangePicker]="rangePicker">
+                <input
+                  matStartDate
+                  placeholder="Start date"
+                  formControlName="startDate"
+                />
+                <input
+                  matEndDate
+                  placeholder="End date"
+                  formArrayName="endDate"
+                />
+              </mat-date-range-input>
+              <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+              <mat-error
+                >Define date range is <strong>required!</strong></mat-error
+              >
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="rangePicker"
+              ></mat-datepicker-toggle>
+              <mat-date-range-picker #rangePicker>
+                <mat-date-range-picker-actions>
+                  <button mat-button matDateRangePickerCancel>Cancel</button>
+                  <button mat-raised-button matDateRangePickerApply>
+                    Apply
+                  </button>
+                </mat-date-range-picker-actions>
+              </mat-date-range-picker>
+            </mat-form-field>
+          </div>
         </div>
-      <button
-        mat-flat-button
-        class="delete-job btn"
-        (click)="deleteJob(i)"
-      >
+        <button class="delete-position btn" (click)="deletePosition(i, j)">
+          Delete Position
+        </button>
+        }
+        <button class="add-position btn" (click)="addPosition(i)">
+          Add Position
+        </button>
+      </div>
+      <button mat-flat-button class="delete-job btn" (click)="deleteJob(i)">
         Delete Job
       </button>
     </div>
     }
     <button mat-flat-button (click)="addJob()">Add Job</button>
   </div>
-  <button class="submit btn">
-    Submit
-  </button>
+  <button class="submit btn" (click)="submit()" >Submit</button>
 </form>
