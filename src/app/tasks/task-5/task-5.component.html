@@ -1,1 +1,18 @@
-<p>task-5 works!</p>
+<div>
+  <div>
+    <label for="text1">Text 1:</label>
+    <input id="text1" [(ngModel)]="text1" />
+  </div>
+  <div>
+    <label for="text2">Text 2:</label>
+    <input id="text2" [(ngModel)]="text2" />
+  </div>
+  <div>
+    <button (click)="compareTexts()">Compare</button>
+  </div>
+  @if(similarity !== null) {
+    <div>
+      <h3>Similarity: {{ similarity }}%</h3>
+    </div>
+  }
+</div>

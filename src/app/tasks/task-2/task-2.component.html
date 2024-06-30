@@ -1,7 +1,32 @@
-<!-- <pre>
-  {{films$ | async | json}}
-</pre> -->
+<h1>Films:</h1>
 
-@for(film of (films$ | async); track film.id) {
-  <p>{{film | json}}</p>
-}
+<div class="search">
+  <input type="text" [(ngModel)]="search" value="search" />
+  <input type="submit" (click)="getFilm()" />
+</div>
+<table>
+  <tr>
+    <th>id</th>
+    <th>title</th>
+    <th>year</th>
+    <th>rating</th>
+  </tr>
+  <tr *ngFor="let film of filteredFilms$ | async">
+    @if(film) {
+    <td>{{ film.id }}</td>
+    <td>{{ film.title }}</td>
+    <td>{{ film.year }}</td>
+    <td>{{ film.rating }}</td>
+    }
+  </tr>
+</table>
+<div class="films">
+  @for(film of (films$ | async); track film.id) {
+  <mat-card appearance="outlined">
+    <mat-card-content>id: {{ film.id }}</mat-card-content>
+    <mat-card-content>title: {{ film.title }}</mat-card-content>
+    <mat-card-content>title: {{ film.year }}</mat-card-content>
+    <mat-card-content>title: {{ film.rating }}</mat-card-content>
+  </mat-card>
+  }
+</div>

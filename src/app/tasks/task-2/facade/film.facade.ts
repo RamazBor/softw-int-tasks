@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { FilmService } from '../service/film.service';
 import { map } from 'rxjs';
+import { Film } from '../interface/film';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ export class FilmFacade {
 
   getFilms() {
     return this.filmService.getFilms().pipe(
-      map((film: any) =>  film)
-    );
+      map((film: Film[]) =>  film)
+    )
   }
 
 }
