@@ -9,7 +9,9 @@ import { MyPipePipe } from './pipes/my-pipe.pipe';
   styleUrl: './task-3.component.scss',
 })
 export class Task3Component {
-  resDate: Date = new Date('Sat Apr 03 2000 13:46:40 GMT+0400 (Georgia Standard Time)');
+  resDate: Date = new Date(
+    'Sat Apr 03 2000 13:46:40 GMT+0400 (Georgia Standard Time)'
+  );
   resString: string = 'Hello World';
   resNumber: number = 12345;
 }

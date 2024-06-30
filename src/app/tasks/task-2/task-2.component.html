@@ -1,1 +1,7 @@
-<p>task-2 works!</p>
+<!-- <pre>
+  {{films$ | async | json}}
+</pre> -->
+
+@for(film of (films$ | async); track film.id) {
+  <p>{{film | json}}</p>
+}
