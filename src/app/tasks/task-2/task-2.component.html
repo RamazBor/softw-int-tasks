@@ -9,6 +9,8 @@
     <th>id</th>
     <th>title</th>
     <th>year</th>
+    <th>director</th>
+    <th>cast</th>
     <th>rating</th>
   </tr>
   <tr *ngFor="let film of filteredFilms$ | async">
@@ -16,6 +18,8 @@
     <td>{{ film.id }}</td>
     <td>{{ film.title }}</td>
     <td>{{ film.year }}</td>
+    <td>{{ film.director }}</td>
+    <td>{{ film.cast }}</td>
     <td>{{ film.rating }}</td>
     }
   </tr>
@@ -25,8 +29,8 @@
   <mat-card appearance="outlined">
     <mat-card-content>id: {{ film.id }}</mat-card-content>
     <mat-card-content>title: {{ film.title }}</mat-card-content>
-    <mat-card-content>title: {{ film.year }}</mat-card-content>
-    <mat-card-content>title: {{ film.rating }}</mat-card-content>
+    <mat-card-content>year: {{ film.year }}</mat-card-content>
+    <mat-card-content>rating: {{ film.rating }}</mat-card-content>
   </mat-card>
   }
 </div>
