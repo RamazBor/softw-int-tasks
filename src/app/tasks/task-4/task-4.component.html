@@ -1,9 +1,12 @@
-<mat-card>
-  <mat-calendar
-    #calendar
-    [dateClass]="dateClass()"
-    [selected]="selectedDate"
-    [maxDate]="maxDate"[minDate]="minDate"
-    (selectedChange)="onSelect($event)"
-  ></mat-calendar>
-</mat-card>
+<div class="calendar">
+  <div class="calendar-header">
+    <h2>{{ currentMonth.format("MMMM YYYY") }}</h2>
+  </div>
+  <div class="calendar-grid">
+    @for(day of daysInMonth; track day) {
+    <div [ngClass]="{ today: isToday(day), holiday: isHoliday(day) }">
+      {{ day }}
+    </div>
+    }
+  </div>
+</div>

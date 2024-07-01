@@ -1,18 +1,26 @@
 <div>
-  <div>
-    <label for="text1">Text 1:</label>
-    <input id="text1" [(ngModel)]="text1" />
-  </div>
-  <div>
-    <label for="text2">Text 2:</label>
-    <input id="text2" [(ngModel)]="text2" />
-  </div>
-  <div>
-    <button (click)="compareTexts()">Compare</button>
-  </div>
-  @if(similarity !== null) {
+  <h2>String Matcher</h2>
+  <form (ngSubmit)="calculateMatch()">
     <div>
-      <h3>Similarity: {{ similarity }}%</h3>
+      <label for="value1">Value 1:</label>
+      <input id="value1" [(ngModel)]="value1" name="value1" required>
+    </div>
+    <div>
+      <label for="value2">Value 2 (comma separated):</label>
+      <input id="value2" [(ngModel)]="value2" name="value2" required>
+    </div>
+    <button type="submit">Calculate Match</button>
+  </form>
+  @if(results.length) {
+    <div>
+      <h3>Results:</h3>
+      <ul>
+        @for(result of results; track result) {
+          <li>
+            {{ result.value }}: {{ result.percentage }}%
+          </li>
+        }
+      </ul>
     </div>
   }
 </div>

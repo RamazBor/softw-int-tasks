@@ -9,25 +9,30 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './task-5.component.scss'
 })
 export class Task5Component {
-  text1: string = '';
-  text2: string = '';
-  similarity: number | null = null;
+  value1: string = '';
+  value2: string = '';
+  results: { value: string, percentage: number }[] = [];
 
-  compareTexts(): void {
-    const similarity = this.calculateSimilarity(this.text1, this.text2);
-    this.similarity = similarity;
+  calculateMatch(): void {
+    this.results = [];
+    const values = this.value2.split(',').map(v => v.trim());
+
+    values.forEach(value => {
+      const matchPercentage = this.getMatchPercentage(this.value1, value);
+      this.results.push({ value: value, percentage: matchPercentage });
+    });
   }
 
-  calculateSimilarity(text1: string, text2: string): number {
-    if (!text1 && !text2) {
-      return 100;
+  getMatchPercentage(str1: string, str2: string): number {
+    const len = Math.max(str1.length, str2.length);
+    let matches = 0;
+
+    for (let i = 0; i < len; i++) {
+      if (str1[i] === str2[i]) {
+        matches++;
+      }
     }
 
-    const set1 = new Set(text1.split(''));
-    const set2 = new Set(text2.split(''));
-    const intersection = new Set([...set1].filter(x => set2.has(x)));
-    const union = new Set([...set1, ...set2]);
-
-    return (intersection.size / union.size) * 100;
+    return (matches / len) * 100;
   }
 }
