@@ -10,7 +10,7 @@ import { MyPipePipe } from './pipes/my-pipe.pipe';
 })
 export class Task3Component {
   resDate: Date = new Date(
-    'Sat Apr 03 2000 13:46:40 GMT+0400 (Georgia Standard Time)'
+    '2023-08-10T09:42:34.0734574Z'
   );
   resString: string = 'Hello World';
   resNumber: number = 12345;

@@ -65,19 +65,29 @@ export class Task1Component {
               Validators.required,
               Validators.minLength(15),
             ]),
-            startDate: new FormControl<Date | undefined | null>(null, [
-              Validators.required,
-              DateLessThanOrEqualsValidator('endDate'),
-            ]),
-            endDate: new FormControl<Date | undefined | null>(
-              null,
-              Validators.required
-            ),
+            dateRange: new FormGroup({
+              startDate: new FormControl<Date | undefined | null>(null, [
+                Validators.required,
+                DateLessThanOrEqualsValidator('endDate'),
+              ]),
+              endDate: new FormControl<Date | undefined | null>(
+                null,
+                Validators.required
+              ),
+            }),
           }),
         ]),
       }),
     ]),
   });
+
+  get jobArray(): FormArray {
+    return this.myForm.get('job') as FormArray;
+  }
+
+  getPositionsArray(i: number): FormArray {
+    return this.jobArray.at(i).get('positions') as FormArray;
+  }
 
   addJob() {
     const frmgroup: FormGroup = new FormGroup({
@@ -107,27 +117,28 @@ export class Task1Component {
             Validators.required,
             Validators.minLength(15),
           ]),
-          startDate: new FormControl<Date | undefined | null>(null, [
-            Validators.required,
-            DateLessThanOrEqualsValidator('endDate'),
-          ]),
-          endDate: new FormControl<Date | undefined | null>(
-            null,
-            Validators.required
-          ),
+          dateRange: new FormGroup({
+            startDate: new FormControl<Date | undefined | null>(null, [
+              Validators.required,
+              DateLessThanOrEqualsValidator('endDate'),
+            ]),
+            endDate: new FormControl<Date | undefined | null>(
+              null,
+              Validators.required
+            ),
+          }),
         }),
       ]),
     });
 
-    (<FormArray>this.myForm.get('job')).push(frmgroup);
+    this.jobArray.push(frmgroup);
   }
   deleteJob(index: number) {
-    const frmArray = <FormArray>this.myForm.get('job');
-    frmArray.removeAt(index);
+    this.jobArray.removeAt(index);
   }
 
   addPosition(i: number) {
-    const frmgroup: FormGroup = new FormGroup({
+    const frmgroup = new FormGroup({
       position: new FormControl<string | undefined | null>(
         null,
         Validators.required
@@ -140,28 +151,29 @@ export class Task1Component {
         Validators.required,
         Validators.minLength(15),
       ]),
-      startDate: new FormControl<Date | undefined | null>(null, [
-        Validators.required,
-        DateLessThanOrEqualsValidator('endDate'),
-      ]),
-      endDate: new FormControl<Date | undefined | null>(
-        null,
-        Validators.required
-      ),
+      dateRange: new FormGroup({
+        startDate: new FormControl<Date | undefined | null>(null, [
+          Validators.required,
+          DateLessThanOrEqualsValidator('endDate'),
+        ]),
+        endDate: new FormControl<Date | undefined | null>(
+          null,
+          Validators.required
+        ),
+      }),
     });
-    (<FormArray>this.myForm.get('job')?.value[i]?.positions).push(frmgroup);
+    this.getPositionsArray(i).push(frmgroup);
   }
 
   deletePosition(jobIndex: number, index: number) {
-    const frmArray = <FormArray>(
-      this.myForm.get('job')?.value[jobIndex]?.positions
-    );
-    frmArray.removeAt(index);
+    this.getPositionsArray(jobIndex).removeAt(index);
   }
 
   submit() {
-    if (this.myForm.get('job')?.value.length >= 1 && this.myForm.valid) {
+    if (this.myForm.get('job')?.value.length > 0 && this.myForm.valid) {
       alert('Form Submitted Successfully.');
+      console.log(this.myForm.value);
+      this.myForm.reset();
     } else {
       alert('Form is not valid!');
     }
