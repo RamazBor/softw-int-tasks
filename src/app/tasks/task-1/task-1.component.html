@@ -1,7 +1,7 @@
 <form class="example-form" [formGroup]="myForm">
   <h1>Reactive Form</h1>
   <div class="form-field-job" formArrayName="job">
-    @for(exp of myForm.get('job')?.value; let i = $index; track i) {
+    @for(exp of jobArray.controls; let i = $index; track i) {
     <div class="job" [formGroupName]="i">
       <label>Job {{ i + 1 }}</label
       ><br />
@@ -49,7 +49,7 @@
               <mat-label>Select level</mat-label>
               <mat-select formControlName="level">
                 @for(level of levels; let i = $index; track i) {
-                <mat-option value="option1">{{ level }}</mat-option>
+                <mat-option [value]="level">{{ level }}</mat-option>
                 }
               </mat-select>
               <mat-error><strong>Required</strong> field!</mat-error>
@@ -75,7 +75,7 @@
               >
               }
             </mat-form-field>
-            <mat-form-field class="example-form-field">
+            <mat-form-field class="example-form-field" formGroupName="dateRange">
               <mat-label>Enter a date range</mat-label>
               <mat-date-range-input [rangePicker]="rangePicker">
                 <input
@@ -86,7 +86,7 @@
                 <input
                   matEndDate
                   placeholder="End date"
-                  formArrayName="endDate"
+                  formControlName="endDate"
                 />
               </mat-date-range-input>
               <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
@@ -123,5 +123,5 @@
     }
     <button mat-flat-button (click)="addJob()">Add Job</button>
   </div>
-  <button class="submit btn" (click)="submit()" >Submit</button>
+  <button class="submit btn" (click)="submit()">Submit</button>
 </form>
